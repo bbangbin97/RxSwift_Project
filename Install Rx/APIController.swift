@@ -9,25 +9,39 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import Alamofire
 
-private let apiKey = "83e38d8bf2973dec25889662e19dfd09"
-
-struct photosDetail {
-    let id : String
-    let owner : String
-    let seceret : String
-    let server : String
-    let farm : Int
-    let title : String
-    let ispublic : Int
-    let isfriend : Int
-    let isfamily : Int
-}
-
-struct photos {
-    let page : Int
-    let pages : Int
-    let perpage : Int
-    let total : Int
-    let photo : [photosDetail]
+class ApiController {
+    
+    struct photosDetail {
+        let id : String
+        let owner : String
+        let seceret : String
+        let server : String
+        let farm : Int
+        let title : String
+        let ispublic : Int
+        let isfriend : Int
+        let isfamily : Int
+    }
+    
+    struct photos {
+        let page : Int
+        let pages : Int
+        let perpage : Int
+        let total : Int
+        let photo : [photosDetail]
+    }
+    
+    static let baseUrl = "http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=83e38d8bf2973dec25889662e19dfd09&format=json"
+    
+    
+   let timer = Observable<Int>.interval(4.0, scheduler: MainScheduler.instance)
+    
+    init(){
+        timer.bind(onNext : { _ in
+            print("timer interrupt")
+        })
+    }
+    
 }
