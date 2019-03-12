@@ -35,11 +35,12 @@ class ApiController {
     
     static let baseUrl = "http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=83e38d8bf2973dec25889662e19dfd09&format=json"
     
+    static var timerDisposable : Disposable?
     
-   let timer = Observable<Int>.interval(4.0, scheduler: MainScheduler.instance)
+    let timer = Observable<Int>.interval(4.0, scheduler: MainScheduler.instance)
     
     init(){
-        timer.bind(onNext : { _ in
+        ApiController.timerDisposable = timer.bind(onNext : { _ in
             print("timer interrupt")
         })
     }

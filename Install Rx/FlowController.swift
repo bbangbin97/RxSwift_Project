@@ -10,6 +10,7 @@ import Foundation
 
 class FlowController {
     static func stopTask(){
+        ApiController.timerDisposable?.dispose()
         print("Stop Task button")
     }
     

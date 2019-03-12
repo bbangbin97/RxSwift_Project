@@ -16,6 +16,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     
+    
+    var disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,16 +26,17 @@ class ViewController: UIViewController {
             .bind(onNext: {
                 FlowController.playTask()
             })
+        .disposed(by: disposeBag)
         pauseButton.rx.tap
             .bind(onNext: {
                 FlowController.pauseTask()
             })
-
+        .disposed(by: disposeBag)
         stopButton.rx.tap
             .bind(onNext:{
                 FlowController.stopTask()
             })
-        
+        .disposed(by: disposeBag)
         ApiController.init()
         
     }
