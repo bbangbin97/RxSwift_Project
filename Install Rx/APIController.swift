@@ -33,16 +33,26 @@ class ApiController {
         let photo : [photosDetail]
     }
     
+    
     static let baseUrl = "http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=83e38d8bf2973dec25889662e19dfd09&format=json"
+    
     
     static var timerDisposable : Disposable?
     
-    let timer = Observable<Int>.interval(4.0, scheduler: MainScheduler.instance)
-    
-    init(){
-        ApiController.timerDisposable = timer.bind(onNext : { _ in
-            print("timer interrupt")
-        })
+
+    static func loadImage(from imageUrl:String)->UIImage?{
+        guard let url = URL(string: imageUrl) else { return nil }
+        guard let data = try? Data(contentsOf: url) else { return nil }
+        
+        let image = UIImage(data: data)
+        return image
+    }
+
+    static func asyncLoadImage(from imageUrl: String, completed: @escaping (UIImage?) -> Void) {
+        DispatchQueue.global().async {
+            let image = self.loadImage(from: imageUrl)
+            completed(image)
+        }
     }
     
 }

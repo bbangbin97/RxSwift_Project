@@ -18,6 +18,10 @@ class ViewController: UIViewController {
     
     
     var disposeBag = DisposeBag()
+    static var timerDisposable : Disposable?
+    
+    let timer = Observable<Int>.interval(4.0, scheduler: MainScheduler.instance)
+    let DEMO_URL = "https://picsum.photos/1024/768/?random"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,21 +30,51 @@ class ViewController: UIViewController {
             .bind(onNext: {
                 FlowController.playTask()
             })
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
         pauseButton.rx.tap
             .bind(onNext: {
                 FlowController.pauseTask()
             })
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
         stopButton.rx.tap
             .bind(onNext:{
                 FlowController.stopTask()
             })
-        .disposed(by: disposeBag)
-        ApiController.init()
+            .disposed(by: disposeBag)
+        
+        ViewController.timerDisposable = timer.bind(onNext : { _ in
+            print("timer interrupt")
+            self.LoadImageView()
+        })
         
     }
     
+    func LoadImageView() -> Void {
+
+       _ = DemoLoadImage(from: DEMO_URL)
+            .observeOn(MainScheduler.instance)
+            .subscribe({ result in
+                switch result {
+                case let .next(image):
+                    self.imageView.image = image
+                case let .error(err):
+                    print(err.localizedDescription)
+                case .completed:
+                    break
+                }
+            })
+        
+    }
+    
+    func DemoLoadImage(from imageUrl : String) -> Observable<UIImage?> {
+        return Observable.create{ response in
+            ApiController.asyncLoadImage(from: imageUrl) { image in
+                response.onNext(image)
+                response.onCompleted()
+            }
+            return Disposables.create()
+        }
+    }
     
 }
 
