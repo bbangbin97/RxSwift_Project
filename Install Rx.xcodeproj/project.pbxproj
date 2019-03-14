@@ -10,7 +10,6 @@
 		75ABCF010A17A166EF0518A7 /* Pods_Install_Rx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3CCC79D4C7CC3ACBDB790E6 /* Pods_Install_Rx.framework */; };
 		E2552A512236408A0044C5FE /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2552A502236408A0044C5FE /* APIController.swift */; };
 		E2552A732238098D0044C5FE /* ApiRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2552A722238098D0044C5FE /* ApiRouter.swift */; };
-		E2552A7522380F980044C5FE /* FlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2552A7422380F980044C5FE /* FlowController.swift */; };
 		E2FE30F8222D23D7007C7D4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FE30F7222D23D7007C7D4E /* AppDelegate.swift */; };
 		E2FE30FA222D23D7007C7D4E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FE30F9222D23D7007C7D4E /* ViewController.swift */; };
 		E2FE30FD222D23D7007C7D4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2FE30FB222D23D7007C7D4E /* Main.storyboard */; };
@@ -24,7 +23,6 @@
 		C4ED3A9AE8D93B0899C5CBF0 /* Pods-Install Rx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Install Rx.debug.xcconfig"; path = "Target Support Files/Pods-Install Rx/Pods-Install Rx.debug.xcconfig"; sourceTree = "<group>"; };
 		E2552A502236408A0044C5FE /* APIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
 		E2552A722238098D0044C5FE /* ApiRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRouter.swift; sourceTree = "<group>"; };
-		E2552A7422380F980044C5FE /* FlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowController.swift; sourceTree = "<group>"; };
 		E2FE30F4222D23D7007C7D4E /* Install Rx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Install Rx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2FE30F7222D23D7007C7D4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2FE30F9222D23D7007C7D4E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 				E2552A502236408A0044C5FE /* APIController.swift */,
 				E2FE30F9222D23D7007C7D4E /* ViewController.swift */,
 				E2552A722238098D0044C5FE /* ApiRouter.swift */,
-				E2552A7422380F980044C5FE /* FlowController.swift */,
 			);
 			path = "Install Rx";
 			sourceTree = "<group>";
@@ -203,6 +200,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwiftExt/RxSwiftExt.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -213,6 +211,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwiftExt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -230,7 +229,6 @@
 				E2FE30FA222D23D7007C7D4E /* ViewController.swift in Sources */,
 				E2552A732238098D0044C5FE /* ApiRouter.swift in Sources */,
 				E2FE30F8222D23D7007C7D4E /* AppDelegate.swift in Sources */,
-				E2552A7522380F980044C5FE /* FlowController.swift in Sources */,
 				E2552A512236408A0044C5FE /* APIController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

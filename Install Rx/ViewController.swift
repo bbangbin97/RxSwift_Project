@@ -8,6 +8,9 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
+import RxSwiftExt
+
 
 class ViewController: UIViewController {
     
@@ -18,7 +21,7 @@ class ViewController: UIViewController {
     
     
     var disposeBag = DisposeBag()
-    static var timerDisposable : Disposable?
+    var timerDisposable : Disposable?
     
     let timer = Observable<Int>.interval(4.0, scheduler: MainScheduler.instance)
     let DEMO_URL = "https://picsum.photos/1024/768/?random"
@@ -26,32 +29,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        playButton.rx.tap
-            .bind(onNext: {
-                FlowController.playTask()
+        timerDisposable = timer
+            .skipUntil(playButton.rx.tap.asObservable())
+            .bind(onNext : { _ in
+                print("timer interrupt")
+                self.LoadImageView()
             })
-            .disposed(by: disposeBag)
-        pauseButton.rx.tap
-            .bind(onNext: {
-                FlowController.pauseTask()
-            })
-            .disposed(by: disposeBag)
-        stopButton.rx.tap
-            .bind(onNext:{
-                FlowController.stopTask()
-            })
-            .disposed(by: disposeBag)
-        
-        ViewController.timerDisposable = timer.bind(onNext : { _ in
-            print("timer interrupt")
-            self.LoadImageView()
-        })
         
     }
     
     func LoadImageView() -> Void {
-
-       _ = DemoLoadImage(from: DEMO_URL)
+        
+        _ = DemoLoadImage(from: DEMO_URL)
             .observeOn(MainScheduler.instance)
             .subscribe({ result in
                 switch result {

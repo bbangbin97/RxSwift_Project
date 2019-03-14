@@ -34,12 +34,12 @@ class ApiController {
     }
     
     
-    static let baseUrl = "http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=83e38d8bf2973dec25889662e19dfd09&format=json"
+    static let baseUrl = "http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=1fbe3608e90dc6426aa75c5170209192&format=json"
     
     
     static var timerDisposable : Disposable?
     
-
+    
     static func loadImage(from imageUrl:String)->UIImage?{
         guard let url = URL(string: imageUrl) else { return nil }
         guard let data = try? Data(contentsOf: url) else { return nil }
