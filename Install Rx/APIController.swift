@@ -13,7 +13,7 @@ import Alamofire
 
 class ApiController {
     
-    struct photosDetail {
+    struct photosDetail : Codable{
         let id : String
         let owner : String
         let seceret : String
@@ -25,7 +25,7 @@ class ApiController {
         let isfamily : Int
     }
     
-    struct photos {
+    struct photos : Codable{
         let page : Int
         let pages : Int
         let perpage : Int
