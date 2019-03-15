@@ -11,6 +11,29 @@ import RxCocoa
 import RxSwift
 import Alamofire
 
+enum APIRouter : URLRequestConvertible {
+    
+    case getImageInfo
+    case getImage
+    
+    private var method : HTTPMethod{
+        switch self{
+        case .getImage, .getImageInfo:
+            return .get
+        }
+    }
+    
+    func asURLRequest() throws -> URLRequest {
+        let url = try ApiController.baseUrl.asURL()
+        var urlRequest = URLRequest(url: url)
+        
+        urlRequest.httpMethod = method.rawValue
+        
+        return urlRequest
+    }
+}
+
+
 class ApiController {
     
     struct photosDetail : Codable{
@@ -40,6 +63,6 @@ class ApiController {
     static var timerDisposable : Disposable?
     
     
-
+    
     
 }

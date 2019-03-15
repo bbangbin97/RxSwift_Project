@@ -10,8 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxSwiftExt
-import SwiftyJSON
-import Foundation
+import Alamofire
 
 class ViewController: UIViewController {
     
@@ -89,7 +88,6 @@ class ViewController: UIViewController {
     }
     
     
-    
     func LoadImageView() -> Void{
         let baseUrl = "https://picsum.photos/1024/768/?random"
         Observable.just(baseUrl)
@@ -106,10 +104,24 @@ class ViewController: UIViewController {
     }
     
     
-    
-    
-   
-    
+//    func GetImageInfo() -> Void {
+//        Observable.create({ observer -> Disposable in
+//            AF.request(APIRouter.getImageInfo)
+//                .responseJSON { response in
+//                    switch response.result {
+//                    case .success:
+//                        print()
+//                        guard let data = response.data else {
+//                            observer.onError(response.error ?? nil)
+//                        }
+//                    case .failure( let error ):
+//                        print("fail")
+//                    }
+//            }
+//            return Disposables.create()
+//        })
+//    }
+//
 }
 
 
