@@ -19,36 +19,53 @@ class ViewController: UIViewController {
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
+    @IBOutlet weak var countLabel: UILabel!
     
-    let timer = Observable<Int>.interval(4.0, scheduler: MainScheduler.instance)
     let DEMO_URL = "https://picsum.photos/1024/768/?random"
     let subject = PublishSubject<Int>()
+    let timer = Observable<Int>.interval(4.0, scheduler: MainScheduler.instance)
     
     var status : Bool?
+    var pause : Bool?
     var disposeBag = DisposeBag()
     var timerDisposable : Disposable?
-    
+    var counter: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        let pauser = Observable.of(pauseButton.rx.tap.asObservable(), playButton.rx.tap.asObservable()).merge()
+        
+//        timer.pausable(pauser)
+//        pause = false
+        
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            self.counter += 1
+            self.countLabel.text = "\(self.counter)"
+        }
+        
         status = true
+        
         playButton.rx.tap
             .bind(onNext : {
-                print("playbutton")
+                print("play button")
                 self.PlayButton()
             })
             .disposed(by: disposeBag)
         stopButton.rx.tap
             .bind(onNext: {
-                print("stopbutton")
+                print("stop button")
                 self.StopButton()
             })
             .disposed(by: disposeBag)
-        
+        pauseButton.rx.tap
+            .bind(onNext : {
+                print("pause button")
+//                self.pause = true
+            }).disposed(by: disposeBag)
     }
     
     func PlayButton() -> Void {
-        if (status == true ){
+        if (status == true){
             status = false
             timerDisposable = timer
                 //.skipUntil(playButton.rx.tap.asObservable())
@@ -57,7 +74,11 @@ class ViewController: UIViewController {
                     self.LoadImageView()
                 })
         }
-        
+//        if (status == true && pause == true){
+//            pause = false
+//            //resume logic
+//        }
+//
     }
     
     func StopButton() -> Void {
@@ -69,15 +90,15 @@ class ViewController: UIViewController {
     
 //    func LoadImageView() -> Void{
 //        let baseUrl = "http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=1fbe3608e90dc6426aa75c5170209192&format=json"
-//
-//        if let url = URL(string: baseUrl){
-//            _ = Observable.just(url)
-//                .map{ try Data(contentsOf: $0) }
-//                .map{ try JSON(data : $0) }
-//                .bind(onNext : { response in
-//                    print(response)
-//                })
-//        }
+//        Observable.just(baseUrl)
+//            .map{ URL(string: $0) }
+//            .filter{ $0 != nil }
+//            .map{ $0! }
+//            .map{ try Data(contentsOf: $0) }
+//            .bind(onNext : {
+//                print($0)
+//            })
+//        .disposed(by: disposeBag)
 //    }
 
 

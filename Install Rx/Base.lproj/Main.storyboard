@@ -18,30 +18,49 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q8L-8l-fbe">
-                                <rect key="frame" x="36" y="99" width="302" height="313"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q8L-8l-fbe">
+                                <rect key="frame" x="30" y="100" width="315" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="qzk-Bc-TMP"/>
+                                </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HI2-Fd-nIB">
-                                <rect key="frame" x="161" y="492" width="52" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HI2-Fd-nIB">
+                                <rect key="frame" x="161.5" y="450" width="52" height="30"/>
                                 <state key="normal" title="일시정지"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ei9-Ot-ynq">
-                                <rect key="frame" x="300" y="492" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ei9-Ot-ynq">
+                                <rect key="frame" x="293.5" y="450" width="30" height="30"/>
                                 <state key="normal" title="중지"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MvK-cB-WHK">
-                                <rect key="frame" x="44" y="492" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MvK-cB-WHK">
+                                <rect key="frame" x="51.5" y="450" width="30" height="30"/>
                                 <state key="normal" title="재생"/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5z-HV-gdC">
+                                <rect key="frame" x="303" y="61" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="q8L-8l-fbe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="2bg-wH-mr0"/>
+                            <constraint firstItem="ei9-Ot-ynq" firstAttribute="centerY" secondItem="HI2-Fd-nIB" secondAttribute="centerY" id="4Yb-7o-dkm"/>
+                            <constraint firstItem="HI2-Fd-nIB" firstAttribute="leading" secondItem="MvK-cB-WHK" secondAttribute="trailing" constant="80" id="7Gg-lJ-bPm"/>
+                            <constraint firstItem="q8L-8l-fbe" firstAttribute="top" secondItem="a5z-HV-gdC" secondAttribute="bottom" constant="18" id="BwE-PJ-6vk"/>
+                            <constraint firstItem="HI2-Fd-nIB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CqX-Pe-hAl"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="q8L-8l-fbe" secondAttribute="trailing" constant="30" id="KVj-33-cDj"/>
+                            <constraint firstItem="HI2-Fd-nIB" firstAttribute="top" secondItem="q8L-8l-fbe" secondAttribute="bottom" constant="50" id="Yjx-fT-QHp"/>
+                            <constraint firstItem="ei9-Ot-ynq" firstAttribute="leading" secondItem="HI2-Fd-nIB" secondAttribute="trailing" constant="80" id="arN-XW-tcP"/>
+                            <constraint firstItem="q8L-8l-fbe" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="80" id="rdA-5c-RLz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="a5z-HV-gdC" secondAttribute="trailing" constant="30" id="xLP-aL-8UK"/>
+                            <constraint firstItem="MvK-cB-WHK" firstAttribute="centerY" secondItem="HI2-Fd-nIB" secondAttribute="centerY" id="yQi-aI-Hd4"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="countLabel" destination="a5z-HV-gdC" id="Wh8-J4-6S0"/>
                         <outlet property="imageView" destination="q8L-8l-fbe" id="FcR-e7-aIY"/>
                         <outlet property="pauseButton" destination="HI2-Fd-nIB" id="9k8-z8-kS4"/>
                         <outlet property="playButton" destination="MvK-cB-WHK" id="hRq-Vf-NwA"/>
