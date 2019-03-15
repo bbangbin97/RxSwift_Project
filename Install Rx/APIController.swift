@@ -40,19 +40,6 @@ class ApiController {
     static var timerDisposable : Disposable?
     
     
-    static func loadImage(from imageUrl:String)->UIImage?{
-        guard let url = URL(string: imageUrl) else { return nil }
-        guard let data = try? Data(contentsOf: url) else { return nil }
-        
-        let image = UIImage(data: data)
-        return image
-    }
 
-    static func asyncLoadImage(from imageUrl: String, completed: @escaping (UIImage?) -> Void) {
-        DispatchQueue.global().async {
-            let image = self.loadImage(from: imageUrl)
-            completed(image)
-        }
-    }
     
 }

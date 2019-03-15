@@ -33,10 +33,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let pauser = Observable.of(pauseButton.rx.tap.asObservable(), playButton.rx.tap.asObservable()).merge()
+        //        let pauser = Observable.of(pauseButton.rx.tap.asObservable(), playButton.rx.tap.asObservable()).merge()
         
-//        timer.pausable(pauser)
-//        pause = false
+        //        timer.pausable(pauser)
+        //        pause = false
         
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
             self.counter += 1
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         pauseButton.rx.tap
             .bind(onNext : {
                 print("pause button")
-//                self.pause = true
+                //                self.pause = true
             }).disposed(by: disposeBag)
     }
     
@@ -74,11 +74,11 @@ class ViewController: UIViewController {
                     self.LoadImageView()
                 })
         }
-//        if (status == true && pause == true){
-//            pause = false
-//            //resume logic
-//        }
-//
+        //        if (status == true && pause == true){
+        //            pause = false
+        //            //resume logic
+        //        }
+        //
     }
     
     func StopButton() -> Void {
@@ -88,50 +88,28 @@ class ViewController: UIViewController {
         }
     }
     
-//    func LoadImageView() -> Void{
-//        let baseUrl = "http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=1fbe3608e90dc6426aa75c5170209192&format=json"
-//        Observable.just(baseUrl)
-//            .map{ URL(string: $0) }
-//            .filter{ $0 != nil }
-//            .map{ $0! }
-//            .map{ try Data(contentsOf: $0) }
-//            .bind(onNext : {
-//                print($0)
-//            })
-//        .disposed(by: disposeBag)
-//    }
-
-
-
-
-
-    func LoadImageView() -> Void {
-
-        _ = DemoLoadImage(from: DEMO_URL)
+    
+    
+    func LoadImageView() -> Void{
+        let baseUrl = "https://picsum.photos/1024/768/?random"
+        Observable.just(baseUrl)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+            .map{ URL(string: $0) }
+            .filter{ $0 != nil }
+            .map{ $0! }
+            .map{ try Data(contentsOf: $0) }
             .observeOn(MainScheduler.instance)
-            .subscribe({ result in
-                switch result {
-                case let .next(image):
-                    self.imageView.image = image
-                case let .error(err):
-                    print(err.localizedDescription)
-                case .completed:
-                    break
-                }
+            .bind(onNext : {
+                self.imageView.image = UIImage( data : $0 )
             })
-
+            .disposed(by: disposeBag)
     }
-
-    func DemoLoadImage(from imageUrl : String) -> Observable<UIImage?> {
-        return Observable.create{ response in
-            ApiController.asyncLoadImage(from: imageUrl) { image in
-                response.onNext(image)
-                response.onCompleted()
-            }
-            return Disposables.create()
-        }
-    }
-
+    
+    
+    
+    
+   
+    
 }
 
 
