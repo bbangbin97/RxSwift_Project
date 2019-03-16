@@ -11,27 +11,27 @@ import RxCocoa
 import RxSwift
 import Alamofire
 
-enum APIRouter : URLRequestConvertible {
-    
-    case getImageInfo
-    case getImage
-    
-    private var method : HTTPMethod{
-        switch self{
-        case .getImage, .getImageInfo:
-            return .get
-        }
-    }
-    
-    func asURLRequest() throws -> URLRequest {
-        let url = try ApiController.baseUrl.asURL()
-        var urlRequest = URLRequest(url: url)
-        
-        urlRequest.httpMethod = method.rawValue
-        
-        return urlRequest
-    }
-}
+//enum APIRouter : URLRequestConvertible {
+//
+//    case getImageInfo
+//    case getImage
+//
+//    private var method : HTTPMethod{
+//        switch self{
+//        case .getImage, .getImageInfo:
+//            return .get
+//        }
+//    }
+//
+//    func asURLRequest() throws -> URLRequest {
+//        let url = try ApiController.baseUrl.asURL()
+//        var urlRequest = URLRequest(url: url)
+//
+//        urlRequest.httpMethod = method.rawValue
+//
+//        return urlRequest
+//    }
+//}
 
 
 class ApiController {
@@ -57,12 +57,22 @@ class ApiController {
     }
     
     
-    static let baseUrl = "http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=1fbe3608e90dc6426aa75c5170209192&format=json"
-    
-    
     static var timerDisposable : Disposable?
-    
-    
-    
+
+    static func GetImageInfo() -> Void {
+        let baseUrl = "https://picsum.photos/list"
+        let session = URLSession.shared
+        let url = URL(string: baseUrl)
+
+        _ = session.rx
+            .json(url: url!)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext : {
+                print($0)
+            })
+
+    }
+
+
     
 }

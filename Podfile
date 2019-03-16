@@ -10,8 +10,8 @@ target 'Install Rx' do
   # Pods for Install Rx
   pod 'RxSwift', '~> 4.0'
   pod 'RxCocoa', '~> 4.0' 
-  pod 'Alamofire', '~> 5.0.0-beta.3'
   pod 'SwiftyJSON'
   pod 'RxSwiftExt'
+  pod 'RxAlamofire'
   
 end

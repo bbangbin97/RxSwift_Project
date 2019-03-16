@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxSwiftExt
-import Alamofire
+import RxAlamofire
 
 class ViewController: UIViewController {
     
@@ -20,8 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var countLabel: UILabel!
     
-    let DEMO_URL = "https://picsum.photos/1024/768/?random"
-    let subject = PublishSubject<Int>()
+    let DEMO_URL = "https://picsum.photos/1920/1080/?random"
     let timer = Observable<Int>.interval(4.0, scheduler: MainScheduler.instance)
     
     var status : Bool?
@@ -30,12 +29,15 @@ class ViewController: UIViewController {
     var timerDisposable : Disposable?
     var counter: Int = 0
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        let pauser = Observable.of(pauseButton.rx.tap.asObservable(), playButton.rx.tap.asObservable()).merge()
+        ApiController.GetImageInfo()
         
-        //        timer.pausable(pauser)
-        //        pause = false
+        let pauser = Observable.of(pauseButton.rx.tap.asObservable())
+        
+        timer.pausable(pauser)
+        pause = false
         
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
             self.counter += 1
@@ -89,7 +91,7 @@ class ViewController: UIViewController {
     
     
     func LoadImageView() -> Void{
-        let baseUrl = "https://picsum.photos/1024/768/?random"
+        let baseUrl = "https://picsum.photos/1920/1080/?random"
         Observable.just(baseUrl)
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
             .map{ URL(string: $0) }
@@ -104,24 +106,26 @@ class ViewController: UIViewController {
     }
     
     
-//    func GetImageInfo() -> Void {
-//        Observable.create({ observer -> Disposable in
-//            AF.request(APIRouter.getImageInfo)
-//                .responseJSON { response in
-//                    switch response.result {
-//                    case .success:
-//                        print()
-//                        guard let data = response.data else {
-//                            observer.onError(response.error ?? nil)
-//                        }
-//                    case .failure( let error ):
-//                        print("fail")
-//                    }
-//            }
-//            return Disposables.create()
-//        })
-//    }
-//
+    //    func GetImageInfo() -> Void {
+    //        Observable.create({ observer -> Disposable in
+    //            AF.request(APIRouter.getImageInfo)
+    //                .responseJSON { response in
+    //                    switch response.result {
+    //                    case .success:
+    //                        print()
+    //                        guard let data = response.data else {
+    //                            observer.onError(response.error ?? nil)
+    //                        }
+    //                    case .failure( let error ):
+    //                        print("fail")
+    //                    }
+    //            }
+    //            return Disposables.create()
+    //        })
+    //    }
+    //
+    
+    
 }
 
 
