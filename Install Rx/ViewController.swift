@@ -34,11 +34,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         ApiController.GetImageInfo()
         
-        let pauser = Observable.of(pauseButton.rx.tap.asObservable())
-        
-        timer.pausable(pauser)
-        pause = false
-        
+//        let pauser = Observable.of(pauseButton.rx.tap.asObservable())
+//
+//        timer.pausable(pauser)
+//        pause = false
+//
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
             self.counter += 1
             self.countLabel.text = "\(self.counter)"
@@ -93,11 +93,11 @@ class ViewController: UIViewController {
     func LoadImageView() -> Void{
         let baseUrl = "https://picsum.photos/1920/1080/?random"
         Observable.just(baseUrl)
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-            .map{ URL(string: $0) }
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+            .map{ URL( string: $0 ) }
             .filter{ $0 != nil }
             .map{ $0! }
-            .map{ try Data(contentsOf: $0) }
+            .map{ try Data( contentsOf: $0 ) }
             .observeOn(MainScheduler.instance)
             .bind(onNext : {
                 self.imageView.image = UIImage( data : $0 )

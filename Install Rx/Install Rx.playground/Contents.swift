@@ -13,3 +13,13 @@ Observable.of(2,2,4,4,6,6)
     })
 // -- 결과 출력 --
 // 2 2 4
+
+let fruits = Observable<String>.create{ observer in
+    observer.onNext("[apple]")
+    sleep(2)
+    observer.onNext("[apple]")
+    sleep(2)
+    observer.onNext("[apple]")
+    return Disposables.create()
+}
+
