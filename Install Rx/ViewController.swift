@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var imageSuperView: UIView!
     
     static let timer = Observable<Int>.interval(4.0, scheduler: MainScheduler.instance)
     
@@ -93,11 +94,21 @@ class ViewController: UIViewController {
             .map{ $0! }
             .map{ try Data( contentsOf: $0 ) }
             .observeOn(MainScheduler.instance)
-            .bind(onNext : {
-                self.imageView.image = UIImage( data : $0 )
+            .subscribe({ response in
+                //self.imageView.image = UIImage( data : $0 )
+                if let imageData = response.element {
+                    UIView.transition(with: self.imageSuperView,
+                                      duration: 1,
+                                      options: .transitionCrossDissolve,
+                                      animations: {
+                                        self.imageView.image = UIImage(data : imageData)
+                    },
+                                      completion: nil)
+                }
             })
     }
-
+    
+    
     
 }
 
