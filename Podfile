@@ -13,5 +13,6 @@ target 'Install Rx' do
   pod 'SwiftyJSON'
   pod 'RxSwiftExt'
   pod 'RxAlamofire'
+  pod 'RxAnimated'
   
 end

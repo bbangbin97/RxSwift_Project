@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import RxSwiftExt
 import RxAlamofire
+import RxAnimated
 
 class ViewController: UIViewController {
     
@@ -20,8 +21,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var countLabel: UILabel!
     
-    let DEMO_URL = "https://picsum.photos/1920/1080/?random"
-    let timer = Observable<Int>.interval(4.0, scheduler: MainScheduler.instance)
+    static let timer = Observable<Int>.interval(4.0, scheduler: MainScheduler.instance)
+    
+    var imageUrlSubject = PublishSubject<String>()
     
     var status : Bool?
     var pause : Bool?
@@ -29,16 +31,11 @@ class ViewController: UIViewController {
     var timerDisposable : Disposable?
     var counter: Int = 0
     
+    var cnt = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         ApiController.GetImageInfo()
-        
-//        let pauser = Observable.of(pauseButton.rx.tap.asObservable())
-//
-//        timer.pausable(pauser)
-//        pause = false
-//
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
             self.counter += 1
             self.countLabel.text = "\(self.counter)"
@@ -63,23 +60,20 @@ class ViewController: UIViewController {
                 print("pause button")
                 //                self.pause = true
             }).disposed(by: disposeBag)
+        
+        
     }
     
     func PlayButton() -> Void {
         if (status == true){
             status = false
-            timerDisposable = timer
+            timerDisposable = ViewController.timer
                 //.skipUntil(playButton.rx.tap.asObservable())
                 .bind(onNext : { _ in
-                    print("timer interrupt")
-                    self.LoadImageView()
+                    self.LoadImageView( Url : ApiController.items[self.cnt].media.m)
+                    self.cnt = self.cnt + 1
                 })
         }
-        //        if (status == true && pause == true){
-        //            pause = false
-        //            //resume logic
-        //        }
-        //
     }
     
     func StopButton() -> Void {
@@ -90,9 +84,9 @@ class ViewController: UIViewController {
     }
     
     
-    func LoadImageView() -> Void{
-        let baseUrl = "https://picsum.photos/1920/1080/?random"
-        Observable.just(baseUrl)
+    
+    func LoadImageView(Url : String?) -> Void{
+        _ = Observable.from(optional: Url)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
             .map{ URL( string: $0 ) }
             .filter{ $0 != nil }
@@ -102,29 +96,8 @@ class ViewController: UIViewController {
             .bind(onNext : {
                 self.imageView.image = UIImage( data : $0 )
             })
-            .disposed(by: disposeBag)
     }
-    
-    
-    //    func GetImageInfo() -> Void {
-    //        Observable.create({ observer -> Disposable in
-    //            AF.request(APIRouter.getImageInfo)
-    //                .responseJSON { response in
-    //                    switch response.result {
-    //                    case .success:
-    //                        print()
-    //                        guard let data = response.data else {
-    //                            observer.onError(response.error ?? nil)
-    //                        }
-    //                    case .failure( let error ):
-    //                        print("fail")
-    //                    }
-    //            }
-    //            return Disposables.create()
-    //        })
-    //    }
-    //
-    
+
     
 }
 
