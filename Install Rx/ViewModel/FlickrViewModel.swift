@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import RxAlamofire
 
 class FlickrViewModel {
     
