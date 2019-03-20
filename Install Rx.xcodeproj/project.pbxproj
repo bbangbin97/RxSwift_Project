@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		75ABCF010A17A166EF0518A7 /* Pods_Install_Rx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3CCC79D4C7CC3ACBDB790E6 /* Pods_Install_Rx.framework */; };
-		E2552A512236408A0044C5FE /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2552A502236408A0044C5FE /* APIController.swift */; };
-		E271684E223FE4E100F22678 /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E271684D223FE4E100F22678 /* ApiModel.swift */; };
-		E28D3D6422425AAF007D36E8 /* RxAlamofire+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D3D6322425AAF007D36E8 /* RxAlamofire+Codable.swift */; };
+		E26900F3224282ED00F383D7 /* FlickrViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26900F2224282ED00F383D7 /* FlickrViewModel.swift */; };
+		E26900F72242837E00F383D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26900F62242837E00F383D7 /* ViewController.swift */; };
+		E26900F92242841A00F383D7 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26900F82242841A00F383D7 /* Common.swift */; };
+		E271684E223FE4E100F22678 /* FilckrModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E271684D223FE4E100F22678 /* FilckrModel.swift */; };
+		E28D3D6422425AAF007D36E8 /* Observable+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D3D6322425AAF007D36E8 /* Observable+Codable.swift */; };
 		E2FE30F8222D23D7007C7D4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FE30F7222D23D7007C7D4E /* AppDelegate.swift */; };
-		E2FE30FA222D23D7007C7D4E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FE30F9222D23D7007C7D4E /* ViewController.swift */; };
 		E2FE30FD222D23D7007C7D4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2FE30FB222D23D7007C7D4E /* Main.storyboard */; };
 		E2FE30FF222D23D8007C7D4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2FE30FE222D23D8007C7D4E /* Assets.xcassets */; };
 		E2FE3102222D23D8007C7D4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2FE3100222D23D8007C7D4E /* LaunchScreen.storyboard */; };
@@ -22,12 +23,13 @@
 		97A2B0F420A709665C3F2A43 /* Pods-Install Rx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Install Rx.release.xcconfig"; path = "Target Support Files/Pods-Install Rx/Pods-Install Rx.release.xcconfig"; sourceTree = "<group>"; };
 		C3CCC79D4C7CC3ACBDB790E6 /* Pods_Install_Rx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Install_Rx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4ED3A9AE8D93B0899C5CBF0 /* Pods-Install Rx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Install Rx.debug.xcconfig"; path = "Target Support Files/Pods-Install Rx/Pods-Install Rx.debug.xcconfig"; sourceTree = "<group>"; };
-		E2552A502236408A0044C5FE /* APIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
-		E271684D223FE4E100F22678 /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
-		E28D3D6322425AAF007D36E8 /* RxAlamofire+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxAlamofire+Codable.swift"; sourceTree = "<group>"; };
+		E26900F2224282ED00F383D7 /* FlickrViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrViewModel.swift; sourceTree = "<group>"; };
+		E26900F62242837E00F383D7 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = "Install Rx/VIew/ViewController.swift"; sourceTree = SOURCE_ROOT; };
+		E26900F82242841A00F383D7 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		E271684D223FE4E100F22678 /* FilckrModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilckrModel.swift; sourceTree = "<group>"; };
+		E28D3D6322425AAF007D36E8 /* Observable+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Codable.swift"; sourceTree = "<group>"; };
 		E2FE30F4222D23D7007C7D4E /* Install Rx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Install Rx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2FE30F7222D23D7007C7D4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E2FE30F9222D23D7007C7D4E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E2FE30FC222D23D7007C7D4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E2FE30FE222D23D8007C7D4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2FE3101222D23D8007C7D4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -64,26 +66,42 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E26900F1224282B800F383D7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E26900F2224282ED00F383D7 /* FlickrViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E26900F42242830B00F383D7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E271684D223FE4E100F22678 /* FilckrModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E26900F52242831300F383D7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E26900F62242837E00F383D7 /* ViewController.swift */,
+			);
+			name = View;
+			path = VIewController;
+			sourceTree = "<group>";
+		};
 		E28D3D6222425A7D007D36E8 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				E28D3D6322425AAF007D36E8 /* RxAlamofire+Codable.swift */,
+				E28D3D6322425AAF007D36E8 /* Observable+Codable.swift */,
 			);
 			path = Extension;
-			sourceTree = "<group>";
-		};
-		E28D3D652242606C007D36E8 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				E2552A502236408A0044C5FE /* APIController.swift */,
-			);
-			path = Network;
 			sourceTree = "<group>";
 		};
 		E28D3D662242608A007D36E8 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				E2FE3103222D23D8007C7D4E /* Info.plist */,
 				E2FE30FB222D23D7007C7D4E /* Main.storyboard */,
 				E2FE30FE222D23D8007C7D4E /* Assets.xcassets */,
 				E2FE3100222D23D8007C7D4E /* LaunchScreen.storyboard */,
@@ -112,13 +130,15 @@
 		E2FE30F6222D23D7007C7D4E /* Install Rx */ = {
 			isa = PBXGroup;
 			children = (
-				E28D3D662242608A007D36E8 /* Assets */,
-				E28D3D652242606C007D36E8 /* Network */,
-				E28D3D6222425A7D007D36E8 /* Extension */,
+				E2FE3103222D23D8007C7D4E /* Info.plist */,
 				E2FE30F7222D23D7007C7D4E /* AppDelegate.swift */,
 				E2FE3109222D282D007C7D4E /* Install Rx.playground */,
-				E2FE30F9222D23D7007C7D4E /* ViewController.swift */,
-				E271684D223FE4E100F22678 /* ApiModel.swift */,
+				E28D3D662242608A007D36E8 /* Assets */,
+				E28D3D6222425A7D007D36E8 /* Extension */,
+				E26900F1224282B800F383D7 /* ViewModel */,
+				E26900F42242830B00F383D7 /* Model */,
+				E26900F52242831300F383D7 /* View */,
+				E26900F82242841A00F383D7 /* Common.swift */,
 			);
 			path = "Install Rx";
 			sourceTree = "<group>";
@@ -257,11 +277,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E271684E223FE4E100F22678 /* ApiModel.swift in Sources */,
-				E2FE30FA222D23D7007C7D4E /* ViewController.swift in Sources */,
+				E26900F72242837E00F383D7 /* ViewController.swift in Sources */,
+				E271684E223FE4E100F22678 /* FilckrModel.swift in Sources */,
+				E26900F3224282ED00F383D7 /* FlickrViewModel.swift in Sources */,
 				E2FE30F8222D23D7007C7D4E /* AppDelegate.swift in Sources */,
-				E28D3D6422425AAF007D36E8 /* RxAlamofire+Codable.swift in Sources */,
-				E2552A512236408A0044C5FE /* APIController.swift in Sources */,
+				E28D3D6422425AAF007D36E8 /* Observable+Codable.swift in Sources */,
+				E26900F92242841A00F383D7 /* Common.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
