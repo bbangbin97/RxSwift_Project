@@ -23,3 +23,9 @@ let fruits = Observable<String>.create{ observer in
     return Disposables.create()
 }
 
+
+func printType<T>(Type : T.Type) -> Void {
+    print("\(Type)")
+}
+
+printType(Type: Int.self)

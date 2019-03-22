@@ -8,6 +8,7 @@
 
 import Foundation
 import RxAlamofire
+import RxSwift
 
 class FlickrViewModel {
     
@@ -20,8 +21,20 @@ class FlickrViewModel {
             .subscribe({ response in
                 _ = response.map { FlickrViewModel.items = $0.items  }
                 FlickrViewModel.itemsCount = FlickrViewModel.items.count
-                print(FlickrViewModel.items.count)
             })
     }
     
+
+//    func LoadImageView(Url : String?) -> Observable<Data>{
+//        _ = Observable.from(optional: Url)
+//            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+//            .map{ URL( string: $0 ) }
+//            .filter{ $0 != nil }
+//            .map{ $0! }
+//            .map{ imageURL -> Observable<Data> in
+//                let imageData = try Data( contentsOf: imageURL )
+//                return Observable.just(imageData)
+//        }
+//    }
+//    
 }
