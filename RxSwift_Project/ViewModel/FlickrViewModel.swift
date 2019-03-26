@@ -15,32 +15,13 @@ class FlickrViewModel {
     static var itemsCount : Int?
     static var items = [FlickrModel.FlickrItemModel]()
     
-    static func getImageInfo() -> Void {
-        _ = RxAlamofire.requestData(.get, CommonConstant.flickrUrl)
-            .mapCodableObject(type: FlickrModel.FlickrModel.self)
-            .subscribe({ response in
-                _ = response.map { FlickrViewModel.items = $0.items  }
-                FlickrViewModel.itemsCount = FlickrViewModel.items.count
+    static func getImageData() {
+        _ = NetworkService.performRequest(router: NetworkRouter.imageInfo)
+            .map{
+                NetworkService.parseData(data: $0.1, type: FlickrModel.FlickrBaseModel.self)
+            }
+            .subscribe(onNext:{
+                items = $0.items
             })
     }
-    
-    //    static func loadImageView() -> Observable<Data>{
-    //
-    //    }
-    
-//    static func loadImageView(Url : String?) -> Observable<UIImage?> {
-//        return convertImageData(Url: Url)
-//            .map{ data in
-//                return UIImage(data : data)
-//        }
-//    }
-    
-//    static func convertImageData(Url : String?) -> Observable<Data>{
-//        return Observable.from(optional: Url)
-//            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-//            .map{ URL( string: $0 ) }
-//            .filter{ $0 != nil }
-//            .map{ $0! }
-//            .map{ try Data( contentsOf: $0 )}
-//    }
 }

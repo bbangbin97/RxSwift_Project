@@ -10,7 +10,7 @@ import Foundation
 
 class FlickrModel {
     
-    struct FlickrModel : Codable {
+    struct FlickrBaseModel : Codable {
         let title : String
         let link : String
         let description : String

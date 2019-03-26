@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         imageAnimateDuration = 1
         buttonStatus = true
         
-        FlickrViewModel.getImageInfo()
+        FlickrViewModel.getImageData()
         bindUI()
         
     }
@@ -106,7 +106,7 @@ class ViewController: UIViewController {
     func checkImageCount() {
         if self.cnt >= 20 {
             self.cnt = 0
-            FlickrViewModel.getImageInfo()
+            FlickrViewModel.getImageData()
         }
     }
     
