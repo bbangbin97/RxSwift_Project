@@ -24,10 +24,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var imageIntervalSlider: UISlider!
     
     
-    var imageUrlSubject = BehaviorSubject<Double>(value: 6)
     
+    var imageUrlSubject = BehaviorSubject<Double>(value: 6)
+    var pauseSubject = BehaviorSubject<Bool>(value : true)
+    
+    
+    var pauseButtonObservable : Observable<Bool>?
+    var pauser : Observable<Bool>?
     var buttonStatus : Bool?
-    var pause : Bool?
+    var pause = false
     var disposeBag = DisposeBag()
     var timerDisposable : Disposable?
     var subjectDisposable : Disposable?
@@ -36,14 +41,19 @@ class ViewController: UIViewController {
     var sliderValue : Double?
     var imageAnimateDuration : Double?
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        pause = true
         imageAnimateDuration = 1
         buttonStatus = true
         
         FlickrViewModel.getImageData()
         bindUI()
+        
+        //pauser = Observable.of(pauseButtonObservable!,pauseSubject).merge()
     }
     
     
@@ -52,7 +62,8 @@ class ViewController: UIViewController {
         imageIntervalSlider.rx.value
             .throttle(1, scheduler: MainScheduler.instance)
             .bind(onNext : { sliderValue in
-                self.sliderValue = Double( sliderValue * 10 + 1 )
+                self.sliderValue = Double( round( sliderValue * 10 + 1 ) )
+                self.imageIntervalSlider.setValue( round( sliderValue * 10 ) / 10 , animated: false)
                 self.imageUrlSubject.onNext(self.sliderValue!)
             })
             .disposed(by: disposeBag)
@@ -64,6 +75,14 @@ class ViewController: UIViewController {
                 self.onPlayButtonClicked()
             })
             .disposed(by: disposeBag)
+        
+        pauseButton.rx.tap
+            .bind(onNext:{ _ in
+                self.pause = !self.pause
+                self.pauseSubject.onNext(self.pause)
+            })
+            .disposed(by: disposeBag)
+        
         
         stopButton.rx.tap
             .bind(onNext: {
@@ -84,23 +103,24 @@ class ViewController: UIViewController {
     
     func onPlayButtonClicked() -> Void {
         buttonStatus = false
-        subjectDisposable = imageUrlSubject.subscribe({ timerValue in
+        subjectDisposable = imageUrlSubject.subscribe(onNext:{ timerValue in
             self.timerDisposable?.dispose()
-            self.timerDisposable = Observable<Int>.timer(0, period: timerValue.element! + self.imageAnimateDuration!, scheduler: MainScheduler.instance)
+            self.timerDisposable = Observable<Int>.timer(0, period: timerValue + self.imageAnimateDuration!, scheduler: MainScheduler.instance)
+                .pausable(self.pauseSubject.asObservable())
                 .map{ _ in self.checkImageCount() }
                 .subscribe(onNext : {
                     print("timer interrupt")
                     self.loadImageView( url : FlickrViewModel.items[self.cnt].media.m)
-                    self.imageDataDisposeBag = DisposeBag()
                     self.cnt = self.cnt + 1
                 })
-            
+        },onDisposed:{
+            self.timerDisposable?.dispose()
         })
     }
     
     func onStopButtonClicked() -> Void {
         buttonStatus = true
-        subjectDisposable?.dispose()
+        subjectDisposable!.dispose()
     }
     
     func checkImageCount() {
@@ -122,7 +142,7 @@ class ViewController: UIViewController {
                                   animations: { self.imageView.image = UIImage(data : response) },
                                   completion: nil)
             })
-        .disposed(by: imageDataDisposeBag)
+            .disposed(by: imageDataDisposeBag)
     }
     
 }
