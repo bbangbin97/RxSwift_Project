@@ -35,6 +35,7 @@
 		E2FE30FE222D23D8007C7D4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2FE3101222D23D8007C7D4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2FE3103222D23D8007C7D4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2FE7AE3224B13A200BD0C2B /* RxSwift_Project.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = RxSwift_Project.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F19A8B1545B4FF2A5FD7B886 /* Pods-RxSwift_Project.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxSwift_Project.release.xcconfig"; path = "Target Support Files/Pods-RxSwift_Project/Pods-RxSwift_Project.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,6 +141,7 @@
 				E2A332D7224A8B3D0076540A /* Network */,
 				E26900F52242831300F383D7 /* View */,
 				E26900F82242841A00F383D7 /* Common.swift */,
+				E2FE7AE3224B13A200BD0C2B /* RxSwift_Project.playground */,
 			);
 			path = RxSwift_Project;
 			sourceTree = "<group>";

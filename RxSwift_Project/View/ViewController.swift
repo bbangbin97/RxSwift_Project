@@ -31,9 +31,9 @@ class ViewController: UIViewController {
     var disposeBag = DisposeBag()
     var timerDisposable : Disposable?
     var subjectDisposable : Disposable?
+    var imageDataDisposeBag = DisposeBag()
     var cnt = 0
     var sliderValue : Double?
-    
     var imageAnimateDuration : Double?
     
     override func viewDidLoad() {
@@ -44,7 +44,6 @@ class ViewController: UIViewController {
         
         FlickrViewModel.getImageData()
         bindUI()
-        
     }
     
     
@@ -59,7 +58,7 @@ class ViewController: UIViewController {
             .disposed(by: disposeBag)
         
         playButton.rx.tap
-            .takeWhile{self.buttonStatus == true}
+            .takeWhile{ self.buttonStatus == true }
             .bind(onNext : {
                 print("play button")
                 self.onPlayButtonClicked()
@@ -78,8 +77,8 @@ class ViewController: UIViewController {
             .asDriver(onErrorJustReturn: nil)
         
         timerValueDriver
-        .drive(countLabel.rx.text)
-        .disposed(by: disposeBag)
+            .drive(countLabel.rx.text)
+            .disposed(by: disposeBag)
     }
     
     
@@ -89,9 +88,10 @@ class ViewController: UIViewController {
             self.timerDisposable?.dispose()
             self.timerDisposable = Observable<Int>.timer(0, period: timerValue.element! + self.imageAnimateDuration!, scheduler: MainScheduler.instance)
                 .map{ _ in self.checkImageCount() }
-                .bind(onNext : {
+                .subscribe(onNext : {
                     print("timer interrupt")
-                    self.loadImageView( Url : FlickrViewModel.items[self.cnt].media.m)
+                    self.loadImageView( url : FlickrViewModel.items[self.cnt].media.m)
+                    self.imageDataDisposeBag = DisposeBag()
                     self.cnt = self.cnt + 1
                 })
             
@@ -112,27 +112,18 @@ class ViewController: UIViewController {
     
     
     
-    func loadImageView(Url : String?) -> Void{
-        _ = Observable.from(optional: Url)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-            .map{ URL( string: $0 ) }
-            .filter{ $0 != nil }
-            .map{ $0! }
-            .map{ try Data( contentsOf: $0 ) }
-            .observeOn( MainScheduler.instance )
-            .subscribe({ response in
-                //self.imageView.image = UIImage( data : $0 )
-                if let imageData = response.element {
-                    UIView.transition(with: self.imageSuperView,
-                                      duration: self.imageAnimateDuration!,
-                                      options: .transitionCrossDissolve,
-                                      animations: { self.imageView.image = UIImage(data : imageData) },
-                                      completion: nil)
-                }
+    func loadImageView(url : String?) -> Void{
+        FlickrViewModel.loadImageData(url: url!)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext : { response in
+                UIView.transition(with: self.imageSuperView,
+                                  duration: self.imageAnimateDuration!,
+                                  options: .transitionCrossDissolve,
+                                  animations: { self.imageView.image = UIImage(data : response) },
+                                  completion: nil)
             })
+        .disposed(by: imageDataDisposeBag)
     }
-    
-    
     
 }
 

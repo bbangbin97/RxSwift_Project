@@ -24,4 +24,14 @@ class FlickrViewModel {
                 items = $0.items
             })
     }
+    
+    static func loadImageData( url : String ) -> Observable<Data>{
+        return Observable.from(optional: url)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+            .map{ URL( string: $0 ) }
+            .filter{ $0 != nil }
+            .map{ $0! }
+            .map{ try Data( contentsOf: $0 ) }
+    }
+    
 }
