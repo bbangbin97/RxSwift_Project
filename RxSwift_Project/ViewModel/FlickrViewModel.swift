@@ -15,11 +15,10 @@ class FlickrViewModel {
     private let flickrService : FlickrAPIService
     private let disposeBag = DisposeBag()
 
-    //let timer = Observable<Int>.timer(0, period: 4, scheduler: MainScheduler.instance)
+    let timer = Observable<Int>.timer(0, period: 4, scheduler: MainScheduler.instance)
     
     let imageData : Observable<Data>
     
-    //var imageCount : Int
     var currentCount : Int = 0
     var flickrModel : Observable<FlickrModel.FlickrBaseModel>
     
@@ -29,6 +28,7 @@ class FlickrViewModel {
         
         flickrModel = flickrService.getFlickrModel()
         
+
         imageData = flickrModel
             .map{ $0.items[0].media.m }
             .flatMap{ FlickrAPIService.loadImageData(url: $0) }
