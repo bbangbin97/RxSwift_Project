@@ -32,10 +32,9 @@ class ViewController: UIViewController {
         
         Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
         
-        
         flickrViewModel = FlickrViewModel(flickrAPIService: FlickrAPIService())
         bindUI(viewModel: flickrViewModel)
-         
+        
     }
     
     
