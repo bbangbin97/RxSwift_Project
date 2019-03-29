@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         
         flickrViewModel = FlickrViewModel(flickrAPIService: FlickrAPIService())
         bindUI(viewModel: flickrViewModel)
-        
+         
     }
     
     
