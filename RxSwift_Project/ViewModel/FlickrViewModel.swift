@@ -27,7 +27,7 @@ class FlickrViewModel {
         self.flickrService = flickrAPIService
         
         flickrModel = flickrService.getFlickrModel()
-        
+          
 
         imageData = flickrModel
             .map{ $0.items[0].media.m }
