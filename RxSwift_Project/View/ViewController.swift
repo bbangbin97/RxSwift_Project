@@ -23,32 +23,37 @@ class ViewController: UIViewController {
     @IBOutlet weak var imageSuperView: UIView!
     @IBOutlet weak var imageIntervalSlider: UISlider!
     
-    var count = 0
+    //var count = 0
     
     private var flickrViewModel : FlickrViewModel!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
+        //Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
         
-        flickrViewModel = FlickrViewModel(flickrAPIService: FlickrAPIService())
+        flickrViewModel = FlickrViewModel(flickrAPIService: FlickrAPIService(),
+                                          playButton: playButton.rx.tap.asObservable())
         bindUI(viewModel: flickrViewModel)
         
     }
     
     
     func bindUI(viewModel : FlickrViewModel) {
-        _ = viewModel.imageData
+        
+         _ = viewModel.imageData
             .map(UIImage.init)
             .observeOn(MainScheduler.instance)
             .bind(animated: imageView.rx.animated.fade(duration: 0.5).image)
+        
     }
 
-    @objc func timerCallback() {
-        count += 1
-        countLabel.text = "\(count)"
-    }
+//    @objc func timerCallback() {
+//        count += 1
+//        countLabel.text = "\(count)"
+//    }
 
 }
 

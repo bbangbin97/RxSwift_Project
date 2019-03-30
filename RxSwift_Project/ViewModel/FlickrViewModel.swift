@@ -14,27 +14,31 @@ class FlickrViewModel {
     
     private let flickrService : FlickrAPIService
     private let disposeBag = DisposeBag()
-
-    let timer = Observable<Int>.timer(0, period: 4, scheduler: MainScheduler.instance)
     
-    let imageData : Observable<Data>
+    var timer = Observable<Int>.timer(0, period: 1, scheduler: MainScheduler.instance)
+    var imageData : Observable<Data>!
     
-    var currentCount : Int = 0
-    var flickrModel : Observable<FlickrModel.FlickrBaseModel>
+    //var currentCount : Int = 0
+    //var flickrModel : Observable<FlickrModel.FlickrBaseModel>
+    var flickrModel : FlickrModel.FlickrBaseModel!
     
-    init(flickrAPIService : FlickrAPIService ){
+    init(flickrAPIService : FlickrAPIService, playButton : Observable<Void> ){
         
         self.flickrService = flickrAPIService
         
-        flickrModel = flickrService.getFlickrModel()
-          
-
-        imageData = flickrModel
-            .map{ $0.items[0].media.m }
-            .flatMap{ FlickrAPIService.loadImageData(url: $0) }
+        imageData = flickrService.getFlickrModel()
+            .map{ self.flickrModel = $0 }
+            .flatMapLatest{ self.timer }
+            .map{ $0 % self.flickrModel.items.count }
+            .map{ self.flickrModel.items[$0].media.m }
+            .flatMapLatest { self.flickrService.loadImageData(url: $0) }
         
-        
+        _  = playButton.subscribe(onNext : {
+            print("play")
+        })
+    
     }
+    
     
     
 }

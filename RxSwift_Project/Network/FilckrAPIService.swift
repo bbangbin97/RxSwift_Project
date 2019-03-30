@@ -21,7 +21,7 @@ class FlickrAPIService {
         
         let decoder = JSONDecoder()
         let object = try? decoder.decode(T.self, from: data)
-
+        print("parse Success!!")
         return object!
     }
     
@@ -32,7 +32,8 @@ class FlickrAPIService {
             }
     }
     
-    static func loadImageData( url : String ) -> Observable<Data>{
+    func loadImageData( url : String ) -> Observable<Data>{
+        print("Now load..")
         return Observable.from(optional: url)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
             .map{ URL( string: $0 ) }
