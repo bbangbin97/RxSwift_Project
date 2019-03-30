@@ -58,6 +58,12 @@
                                     <constraint firstAttribute="width" constant="150" id="7Iu-50-wYq"/>
                                 </constraints>
                             </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mPE-St-ArJ">
+                                <rect key="frame" x="303" y="626.5" width="42" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -70,6 +76,8 @@
                             <constraint firstItem="ojs-cE-D1c" firstAttribute="top" secondItem="HI2-Fd-nIB" secondAttribute="bottom" constant="58" id="jkL-bs-4NC"/>
                             <constraint firstItem="ojs-cE-D1c" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oGj-PE-9m0"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="por-6A-3Jh" secondAttribute="trailing" constant="30" id="pjs-U4-g9s"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mPE-St-ArJ" secondAttribute="trailing" constant="30" id="pvI-ed-seI"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mPE-St-ArJ" secondAttribute="bottom" constant="20" id="s1R-Wh-luY"/>
                             <constraint firstItem="HI2-Fd-nIB" firstAttribute="top" secondItem="por-6A-3Jh" secondAttribute="bottom" constant="40" id="tkp-3i-tH2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="a5z-HV-gdC" secondAttribute="trailing" constant="30" id="xLP-aL-8UK"/>
                             <constraint firstItem="MvK-cB-WHK" firstAttribute="centerY" secondItem="HI2-Fd-nIB" secondAttribute="centerY" id="yQi-aI-Hd4"/>
@@ -79,6 +87,7 @@
                     </view>
                     <connections>
                         <outlet property="countLabel" destination="a5z-HV-gdC" id="Wh8-J4-6S0"/>
+                        <outlet property="currentIntervalLabel" destination="mPE-St-ArJ" id="UtT-Fw-JFe"/>
                         <outlet property="imageIntervalSlider" destination="ojs-cE-D1c" id="aff-qJ-Pig"/>
                         <outlet property="imageSuperView" destination="por-6A-3Jh" id="QBI-cf-uBl"/>
                         <outlet property="imageView" destination="q8L-8l-fbe" id="FcR-e7-aIY"/>
