@@ -23,32 +23,127 @@ class ViewController: UIViewController {
     @IBOutlet weak var imageSuperView: UIView!
     @IBOutlet weak var imageIntervalSlider: UISlider!
     
-    var count = 0
     
-    private var flickrViewModel : FlickrViewModel!
+    var timerValueSubject = BehaviorSubject<Double>(value: 6)
+    var pauseSubject = BehaviorSubject<Bool>(value : true)
+    
+    
+    var pauseButtonObservable : Observable<Bool>?
+    var pauser : Observable<Bool>?
+    var buttonStatus : Bool?
+    var pause = false
+    var disposeBag = DisposeBag()
+    var timerDisposable : Disposable?
+    var subjectDisposable : Disposable?
+    var imageDataDisposeBag = DisposeBag()
+    var cnt = 0
+    var sliderValue : Double?
+    var imageAnimateDuration : Double?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
+        pause = true
+        imageAnimateDuration = 1
+        buttonStatus = true
         
-        flickrViewModel = FlickrViewModel(flickrAPIService: FlickrAPIService())
-        bindUI(viewModel: flickrViewModel)
+        FlickrViewModel.getImageData()
+        bindUI()
         
+        //pauser = Observable.of(pauseButtonObservable!,pauseSubject).merge()
     }
     
     
-    func bindUI(viewModel : FlickrViewModel) {
-        _ = viewModel.imageData
-            .map(UIImage.init)
+    func bindUI() {
+        
+        imageIntervalSlider.rx.value
+            .throttle(1, scheduler: MainScheduler.instance)
+            .bind(onNext : { sliderValue in
+                self.sliderValue = Double( round( sliderValue * 10 + 1 ) )
+                self.imageIntervalSlider.setValue( round( sliderValue * 10 ) / 10 , animated: false)
+                self.timerValueSubject.onNext(self.sliderValue!)
+            })
+            .disposed(by: disposeBag)
+        
+        playButton.rx.tap
+            .takeWhile{ self.buttonStatus == true }
+            .bind(onNext : {
+                print("play button")
+                self.onPlayButtonClicked()
+            })
+            .disposed(by: disposeBag)
+        
+        pauseButton.rx.tap
+            .bind(onNext:{ _ in
+                self.pause = !self.pause
+                self.pauseSubject.onNext(self.pause)
+            })
+            .disposed(by: disposeBag)
+        
+        
+        stopButton.rx.tap
+            .bind(onNext: {
+                print("stop button")
+                self.onStopButtonClicked()
+            })
+            .disposed(by: disposeBag)
+        
+        let timerValueDriver = timerValueSubject
+            .map{ "current timer duration \( $0 )" }
+            .asDriver(onErrorJustReturn: nil)
+        
+        timerValueDriver
+            .drive(countLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+    
+    
+    func onPlayButtonClicked() -> Void {
+        buttonStatus = false
+        subjectDisposable = timerValueSubject.subscribe(onNext:{ timerValue in
+            self.timerDisposable?.dispose()
+            self.timerDisposable = Observable<Int>.timer(0, period: timerValue + self.imageAnimateDuration!,
+                                                         scheduler: MainScheduler.instance)
+                .pausable(self.pauseSubject.asObservable())
+                .map{ _ in self.checkImageCount() }
+                .subscribe(onNext : {
+                    print("timer interrupt")
+                    self.loadImageView( url : FlickrViewModel.items[self.cnt].media.m)
+                    self.cnt = self.cnt + 1
+                })
+        },onDisposed:{
+            self.timerDisposable?.dispose()
+        })
+    }
+    
+    func onStopButtonClicked() -> Void {
+        buttonStatus = true
+        subjectDisposable!.dispose()
+    }
+    
+    func checkImageCount() {
+        if self.cnt >= 20 {
+            self.cnt = 0
+            FlickrViewModel.getImageData()
+        }
+    }
+    
+    
+    
+    func loadImageView(url : String?) -> Void{
+        FlickrViewModel.loadImageData(url: url!)
             .observeOn(MainScheduler.instance)
-            .bind(animated: imageView.rx.animated.fade(duration: 0.5).image)
+            .subscribe(onNext : { response in
+                UIView.transition(with: self.imageSuperView,
+                                  duration: self.imageAnimateDuration!,
+                                  options: .transitionCrossDissolve,
+                                  animations: { self.imageView.image = UIImage(data : response) },
+                                  completion: nil)
+            })
+            .disposed(by: imageDataDisposeBag)
     }
-
-    @objc func timerCallback() {
-        count += 1
-        countLabel.text = "\(count)"
-    }
-
+    
 }
 

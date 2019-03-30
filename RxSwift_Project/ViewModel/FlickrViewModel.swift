@@ -12,29 +12,26 @@ import RxSwift
 
 class FlickrViewModel {
     
-    private let flickrService : FlickrAPIService
-    private let disposeBag = DisposeBag()
-
-    let timer = Observable<Int>.timer(0, period: 4, scheduler: MainScheduler.instance)
+    static var itemsCount : Int?
+    static var items = [FlickrModel.FlickrItemModel]()
     
-    let imageData : Observable<Data>
-    
-    var currentCount : Int = 0
-    var flickrModel : Observable<FlickrModel.FlickrBaseModel>
-    
-    init(flickrAPIService : FlickrAPIService ){
-        
-        self.flickrService = flickrAPIService
-        
-        flickrModel = flickrService.getFlickrModel()
-        
-
-        imageData = flickrModel
-            .map{ $0.items[0].media.m }
-            .flatMap{ FlickrAPIService.loadImageData(url: $0) }
-        
-        
+    static func getImageData() {
+        _ = NetworkService.performRequest(router: NetworkRouter.imageInfo)
+            .map{
+                NetworkService.parseData(data: $0.1, type: FlickrModel.FlickrBaseModel.self)
+            }
+            .subscribe(onNext:{
+                items = $0.items
+            })
     }
     
+    static func loadImageData( url : String ) -> Observable<Data>{
+        return Observable.from(optional: url)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+            .map{ URL( string: $0 ) }
+            .filter{ $0 != nil }
+            .map{ $0! }
+            .map{ try Data( contentsOf: $0 ) }
+    }
     
 }
