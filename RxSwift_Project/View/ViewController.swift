@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         _ = viewModel.imageData
             .map(UIImage.init)
             .observeOn(MainScheduler.instance)
-            .bind(animated: imageView.rx.animated.fade(duration: 0.5).image)
+            .bind(animated: imageView.rx.animated.fade(duration: 0.3).image)
         
         _ = imageIntervalSlider.rx.value
             .subscribe(onNext: {
@@ -61,6 +61,10 @@ class ViewController: UIViewController {
         _ = viewModel.intervalValue
             .map{"current Interval : \($0)"}
             .bind(to: currentIntervalLabel.rx.text)
+        
+        _ = viewModel.timerWithSlider
+            .map{ "current index \($0)" }
+            .bind(to: countLabel.rx.text)
     }
     
     //    @objc func timerCallback() {
