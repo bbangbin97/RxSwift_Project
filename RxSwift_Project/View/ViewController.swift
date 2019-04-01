@@ -20,11 +20,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var countLabel: UILabel!
-    @IBOutlet weak var imageSuperView: UIView!
     @IBOutlet weak var imageIntervalSlider: UISlider!
     @IBOutlet weak var currentIntervalLabel: UILabel!
+    @IBOutlet weak var timerLabel: UILabel!
     
-    //var count = 0
+    var count = 0
+    var uiDisposeBag = DisposeBag()
     
     private var flickrViewModel : FlickrViewModel!
     
@@ -33,7 +34,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
         
         flickrViewModel = FlickrViewModel(flickrAPIService: FlickrAPIService(),
                                           playButton: playButton.rx.tap.asObservable(),
@@ -41,36 +42,48 @@ class ViewController: UIViewController {
                                           stopButton: stopButton.rx.tap.asObservable(),
                                           imageIntervalSlider: imageIntervalSlider.rx.value.asObservable())
         
-        bindUI(viewModel: flickrViewModel)
+        _ = stopButton.rx.tap.subscribe(onNext:{
+            self.uiDisposeBag = DisposeBag()
+            self.imageView.image = nil
+        })
+        
+        _ = playButton.rx.tap.subscribe(onNext:{
+            self.bindUI(viewModel: self.flickrViewModel)
+        })
         
     }
     
     
     func bindUI(viewModel : FlickrViewModel) {
         
-        _ = viewModel.imageData
+        viewModel.imageData
             .map(UIImage.init)
             .observeOn(MainScheduler.instance)
             .bind(animated: imageView.rx.animated.fade(duration: 0.3).image)
-        
-        _ = imageIntervalSlider.rx.value
+        .disposed(by: uiDisposeBag)
+
+        imageIntervalSlider.rx.value
             .subscribe(onNext: {
                 self.imageIntervalSlider.setValue( round( $0 * 10 )/10 , animated: false)
             })
-        
-        _ = viewModel.intervalValue
-            .map{"current Interval : \($0)"}
+        .disposed(by: uiDisposeBag)
+
+        viewModel.intervalValue
+            .map{"현재 슬라이더 값 : \($0)"}
             .bind(to: currentIntervalLabel.rx.text)
-        
-        _ = viewModel.timerWithSlider
-            .map{ "current index \($0)" }
+        .disposed(by: uiDisposeBag)
+
+        viewModel.timerWithSlider
+            .map{ "\($0)번째 사진" }
             .bind(to: countLabel.rx.text)
+        .disposed(by: uiDisposeBag)
+        
     }
     
-    //    @objc func timerCallback() {
-    //        count += 1
-    //        countLabel.text = "\(count)"
-    //    }
+    @objc func timerCallback() {
+        count += 1
+        timerLabel.text = "\(count)"
+    }
     
 }
 

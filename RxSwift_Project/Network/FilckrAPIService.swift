@@ -21,12 +21,12 @@ class FlickrAPIService {
         
         let decoder = JSONDecoder()
         let object = try? decoder.decode(T.self, from: data)
-        
+
         return object!
     }
     
     func getFlickrModel() -> Observable<FlickrModel.FlickrBaseModel>{
-        print("Now HTTP Request!!")
+        print("Make HTTP Request")
         return performRequest(router: NetworkRouter.imageInfo)
             .map{
                 self.parseData(data: $0.1, type: FlickrModel.FlickrBaseModel.self)
