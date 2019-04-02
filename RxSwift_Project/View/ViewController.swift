@@ -41,7 +41,7 @@ class ViewController: UIViewController {
                                           pauseButton: pauseButton.rx.tap.asObservable(),
                                           stopButton: stopButton.rx.tap.asObservable(),
                                           imageIntervalSlider: imageIntervalSlider.rx.value.asObservable())
-        
+    
         _ = stopButton.rx.tap.subscribe(onNext:{
             self.uiDisposeBag = DisposeBag()
             self.imageView.image = nil

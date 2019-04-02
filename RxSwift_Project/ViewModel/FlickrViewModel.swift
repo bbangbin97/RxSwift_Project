@@ -25,9 +25,17 @@ class FlickrViewModel {
     init(flickrAPIService : FlickrAPIService, playButton : Observable<Void>, pauseButton : Observable<Void>, stopButton : Observable<Void>, imageIntervalSlider : Observable<Float>){
         
         var currentIndex = -1
+        var currentPlayStatus = true
+        
         let flickrDataTrigger = BehaviorSubject<Bool>(value: true)
+        let flickrPuaser = BehaviorSubject<Bool>(value: true)
         
         self.flickrService = flickrAPIService
+        
+        _ = pauseButton.subscribe(onNext:{
+            currentPlayStatus = !currentPlayStatus
+            flickrPuaser.onNext(currentPlayStatus)
+        })
         
         _ = stopButton.subscribe(onNext:{
             currentIndex = -1
@@ -39,7 +47,7 @@ class FlickrViewModel {
         
         self.timerWithSlider = self.intervalValue
             .map{ Double($0) }
-            .flatMapLatest{ Observable<Int>.timer(0, period: Double( $0 ), scheduler: MainScheduler.instance) }
+            .flatMapLatest{ Observable<Int>.timer(0, period: Double( $0 ), scheduler: MainScheduler.instance).pausable(flickrPuaser) }
             .map{_ in
                 if currentIndex >= 19 {
                     currentIndex = 0
