@@ -67,6 +67,7 @@ class FlickrViewModel {
             .flatMapLatest{ self.timerWithSlider }
             .map{ self.flickrModel.items[$0].media.m }
             .flatMapLatest { self.flickrService.loadImageData(url: $0) }
+            .observeOn(MainScheduler.instance)
         
     }
     

@@ -29,8 +29,6 @@ class ViewController: UIViewController {
     
     private var flickrViewModel : FlickrViewModel!
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,13 +39,14 @@ class ViewController: UIViewController {
                                           pauseButton: pauseButton.rx.tap.asObservable(),
                                           stopButton: stopButton.rx.tap.asObservable(),
                                           imageIntervalSlider: imageIntervalSlider.rx.value.asObservable())
-    
+        
         _ = stopButton.rx.tap.subscribe(onNext:{
             self.uiDisposeBag = DisposeBag()
             self.imageView.image = nil
         })
         
         _ = playButton.rx.tap.subscribe(onNext:{
+            // button pushed only one time
             self.bindUI(viewModel: self.flickrViewModel)
         })
         
@@ -58,25 +57,24 @@ class ViewController: UIViewController {
         
         viewModel.imageData
             .map(UIImage.init)
-            .observeOn(MainScheduler.instance)
             .bind(animated: imageView.rx.animated.fade(duration: 0.3).image)
-        .disposed(by: uiDisposeBag)
-
+            .disposed(by: uiDisposeBag)
+        
         imageIntervalSlider.rx.value
             .subscribe(onNext: {
                 self.imageIntervalSlider.setValue( round( $0 * 10 )/10 , animated: false)
             })
-        .disposed(by: uiDisposeBag)
-
+            .disposed(by: uiDisposeBag)
+        
         viewModel.intervalValue
             .map{"현재 슬라이더 값 : \($0)"}
             .bind(to: currentIntervalLabel.rx.text)
-        .disposed(by: uiDisposeBag)
-
+            .disposed(by: uiDisposeBag)
+        
         viewModel.timerWithSlider
             .map{ "\($0)번째 사진" }
             .bind(to: countLabel.rx.text)
-        .disposed(by: uiDisposeBag)
+            .disposed(by: uiDisposeBag)
         
     }
     
