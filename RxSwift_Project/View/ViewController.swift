@@ -26,6 +26,7 @@ class ViewController: UIViewController {
     
     var count = 0
     var uiDisposeBag = DisposeBag()
+    var buttonStatus = false
     
     private var flickrViewModel : FlickrViewModel!
     
@@ -43,11 +44,14 @@ class ViewController: UIViewController {
         _ = stopButton.rx.tap.subscribe(onNext:{
             self.uiDisposeBag = DisposeBag()
             self.imageView.image = nil
+            self.buttonStatus = false
         })
         
         _ = playButton.rx.tap.subscribe(onNext:{
-            // button pushed only one time
-            self.bindUI(viewModel: self.flickrViewModel)
+            if self.buttonStatus == false {
+                self.bindUI(viewModel: self.flickrViewModel)
+                self.buttonStatus = true
+            }
         })
         
     }

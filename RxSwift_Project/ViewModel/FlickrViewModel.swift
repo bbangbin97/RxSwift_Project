@@ -48,7 +48,7 @@ class FlickrViewModel {
         self.timerWithSlider = self.intervalValue
             .map{ Double($0) }
             .flatMapLatest{ Observable<Int>.timer(0, period: Double( $0 ), scheduler: MainScheduler.instance).pausable(flickrPuaser) }
-            .map{_ in
+            .map{ _ in
                 if currentIndex >= 19 {
                     currentIndex = 0
                     flickrDataTrigger.onNext(true)
